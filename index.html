@@ -155,19 +155,18 @@
         "sude|devran": "Sude ve Devran, güzelliği sadeliğinde olan bir aşk yaşıyorlar. Sessizliklerinde bile sevgi konuşur. Birbirlerine bakarken dünya susar, zaman durur. Aşk onlar için sadece bir duygu değil, bir paylaşım biçimi."
       };
       
-      const coupleKey = [name1.toLowerCase(), name2.toLowerCase()].sort().join('|');      
-      if (specialCouples[key]) {
+      const coupleKey = [name1, name2].sort().join('|');
+      if (specialCouples[coupleKey]) {
         resultDiv.innerHTML = `
           💖 <strong>${name1.toUpperCase()} & ${name2.toUpperCase()}</strong> 💖<br>
           Aşk Yüzdesi: <strong>%100</strong><br>
-          ${specialCouples[key]}
+          ${specialCouples[coupleKey]}
         `;
         for (let i = 0; i < 50; i++) {
           setTimeout(createHeart, i * 80);
         }
         return;
       }
-
       // Diğerlerı için rastgele skor
       const score = Math.floor(Math.random() * 41) + 50;
       resultDiv.innerHTML = `
