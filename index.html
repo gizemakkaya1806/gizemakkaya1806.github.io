@@ -124,7 +124,7 @@
 
       music.play().catch(() => {});
 
-      const key = `${name1}|${name2}`;
+      const coupleKey = [name1, name2].sort().join('|');
       if(key === "emir|gizem" && burc1 === "Koç" && burc2 === "İkizler" || 
     key === "emir|gizem" && burc1 === "İkizler" && burc2 === "Koç"){
         document.body.innerHTML = "";
