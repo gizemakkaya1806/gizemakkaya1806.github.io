@@ -125,7 +125,8 @@
       music.play().catch(() => {});
 
       const key = `${name1}|${name2}`;
-      if (key === "gizem|emir" && burc1 === "Koç" && burc2 === "İkizler") {
+      if(key === "emir|gizem" && burc1 === "Koç" && burc2 === "İkizler" || 
+    key === "emir|gizem" && burc1 === "İkizler" && burc2 === "Koç"){
         document.body.innerHTML = "";
         for (let i = 0; i < 100; i++) {
           const errorText = document.createElement("div");
