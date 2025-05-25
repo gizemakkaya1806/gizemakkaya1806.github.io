@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Aşk Ölçer 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff0f5;
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: #e91e63;
+    }
+
+    input, select {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: 1px solid #e91e63;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.3em;
+      color: #c2185b;
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 240, 245, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: flyUp 3s linear forwards;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes flyUp {
+      0% {
+        bottom: 0;
+        opacity: 1;
+        transform: translateX(0);
+      }
+      100% {
+        bottom: 100vh;
+        opacity: 0;
+        transform: translateX(calc(-50px + 100px * var(--rand)));
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Aşk Ölçer 💘</h1>
+
+  <input type="text" id="name1" placeholder="Senin adın">
+  <select id="burc1">
+    <option disabled selected>Senin burcun</option>
+    <option>Koç</option><option>Boğa</option><option>İkizler</option><option>Yengeç</option>
+    <option>Aslan</option><option>Başak</option><option>Terazi</option><option>Akrep</option>
+    <option>Yay</option><option>Oğlak</option><option>Kova</option><option>Balık</option>
+  </select><br>
+
+  <input type="text" id="name2" placeholder="Onun adı">
+  <select id="burc2">
+    <option disabled selected>Onun burcu</option>
+    <option>Koç</option><option>Boğa</option><option>İkizler</option><option>Yengeç</option>
+    <option>Aslan</option><option>Başak</option><option>Terazi</option><option>Akrep</option>
+    <option>Yay</option><option>Oğlak</option><option>Kova</option><option>Balık</option>
+  </select><br>
+
+  <button onclick="askOlc()">Äışkı Ölç!</button>
+
+  <div id="result"></div>
+
+  <audio id="music" loop autoplay>
+    <source src="yalin.mp3" type="audio/mpeg">
+    Tarayıcınız ses öğesini desteklemiyor.
+  </audio>
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.setProperty('--rand', Math.random());
+      heart.innerText = ['💖','💕','❤️','💘','💞'][Math.floor(Math.random() * 5)];
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    function askOlc() {
+      const name1 = document.getElementById('name1').value.trim().toLowerCase();
+      const name2 = document.getElementById('name2').value.trim().toLowerCase();
+      const burc1 = document.getElementById('burc1').value;
+      const burc2 = document.getElementById('burc2').value;
+      const resultDiv = document.getElementById('result');
+      const music = document.getElementById('music');
+
+      if (!name1 || !burc1 || !name2 || !burc2) {
+        resultDiv.innerText = "Lütfen tüm alanları doldur!";
+        return;
+      }
+
+      music.play().catch(() => {});
+
+      const key = `${name1}|${name2}`;
+      if (key === "gizem|emir" && burc1 === "Koç" && burc2 === "İkizler") {
+        document.body.innerHTML = "";
+        for (let i = 0; i < 100; i++) {
+          const errorText = document.createElement("div");
+          errorText.innerText = "ERROR";
+          errorText.style.position = "absolute";
+          errorText.style.color = "red";
+          errorText.style.fontSize = "32px";
+          errorText.style.fontWeight = "bold";
+          errorText.style.top = Math.random() * window.innerHeight + "px";
+          errorText.style.left = Math.random() * window.innerWidth + "px";
+          document.body.appendChild(errorText);
+        }
+        return;
+      }
+
+      // Özel çiftler
+      const specialCouples = {
+        "rüveyda|ömer": "Rüveyda ve Ömer arasındaki bağ, zamanla değil ruhla kurulan bir bağdır. Onlar, hayatlarının her alanında birbirini tamamlayan iki yürek. Kalplerindeki sevgi, evrendeki tüm yıldızlardan daha parlak. Birbirlerine olan bağlılıkları zamanın bile ötesindedir.",
+        "sena|efe": "Sena ve Efe, birbirlerini anlamak konusunda adeta telepatik bir yeteneğe sahipler. Sevgiyle dolu bakışları, karanlığı bile aydınlatacak güce sahip. Onların arasındaki bağ öyle güçlü ki, her engel onlar için bir adım daha yaklaşmak demek. Birlikte olduklarında dünya daha güzel.",
+        "aykan|ezgi": "Aykan ve Ezgi arasındaki sevgi, en sade haliyle bile büyüleyici. Her kelimelerinde, her gülüşlerinde birbirlerine duydukları derin bağ hissediliyor. Bu bağ, sıradan bir aşk değil; ruh eşliğinin somut hali. Kalpleri tek bir ritimde atıyor gibi...",
+        "melis|ömer": "Melis ve Ömer, sevginin sadakatle yoğrulmuş halini yaşıyorlar. Onların gülüşleri birbirlerine umut veriyor, dünyaya değer katıyor. Birlikte oldukları her an, zaman adeta duruyor. Kalplerinin uyumu, şairlere ilham olur cinsten.",
+        "emirhan|melike": "Emirhan ve Melike'nin sevgisi, fırtınalı bir denizde liman gibi. Birbirlerine sımsıkı tutunmuşlar ve hiçbir rüzgar bu bağı koparamaz. Güzellikleri sadece gözle görülmez, kalpten hissedilir. Aşk onlar için bir hayat tarzı.",
+        "emirhan|ayşegül": "Emirhan ve Ayşegül, hayatlarına anlam katan bir aşk yaşıyorlar. Bu bağ, sadece iki insan arasında değil; iki ruhun bir yolculuğu. Her adımda daha da yakınlaşıyorlar, her sözde daha da güçleniyorlar. Onların hikayesi bir roman gibi...",
+        "yunus emre|ayşenur": "Yunus Emre ve Ayşenur'un aşkı, kelimelere sığmayacak kadar derin. Her bakış, her dokunuş sevginin en saf halini anlatıyor. Zaman bile onların yanında yavaş ilerliyor. Bu aşk, bir ömre değer.",
+        "onur|melike": "Onur ve Melike'nin arasındaki sevgi, yıldızlara uzanan bir köprü gibi. Her gece birbirlerinin hayallerinde yürüyorlar. Bu aşk, kalplerinde kök salmış ve her gün biraz daha çiçek açıyor. Güzellikleri zamanla değil, hislerle ölçülür.",
+        "sude|devran": "Sude ve Devran, güzelliği sadeliğinde olan bir aşk yaşıyorlar. Sessizliklerinde bile sevgi konuşur. Birbirlerine bakarken dünya susar, zaman durur. Aşk onlar için sadece bir duygu değil, bir paylaşım biçimi."
+      };
+
+      if (specialCouples[key]) {
+        resultDiv.innerHTML = `
+          💖 <strong>${name1.toUpperCase()} & ${name2.toUpperCase()}</strong> 💖<br>
+          Aşk Yüzdesi: <strong>%100</strong><br>
+          ${specialCouples[key]}
+        `;
+        for (let i = 0; i < 50; i++) {
+          setTimeout(createHeart, i * 80);
+        }
+        return;
+      }
+
+      // Diğerlerı için rastgele skor
+      const score = Math.floor(Math.random() * 41) + 50;
+      resultDiv.innerHTML = `
+        ${name1} ❤️ ${name2}<br>
+        Aşk Yüzdesi: <strong>%${score}</strong><br>
+        ${score > 85 ? "✨ Harika bir uyum görünüyor!" : score > 70 ? "💕 Güzel bir bağlantı olabilir." : "😔 Belki biraz daha zaman gerek..."}
+      `;
+      for (let i = 0; i < 30; i++) {
+        setTimeout(createHeart, i * 100);
+      }
+    }
+  </script>
+</body>
+</html>
